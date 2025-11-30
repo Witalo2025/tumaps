@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Criado com a Lasy",
-  description: "Projeto criado com Lasy AI",
+  title: "StyleHub - O App Mais Estiloso",
+  description: "O aplicativo mais estiloso e moderno que voce ja viu",
 };
 
 export default function RootLayout({

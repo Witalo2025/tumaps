@@ -123,8 +123,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
 }
