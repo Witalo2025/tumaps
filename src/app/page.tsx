@@ -2,20 +2,35 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase'
 
 export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    // Verificar se usuário está autenticado
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        router.push('/dashboard')
-      } else {
+    // Verificar se o Supabase está configurado
+    if (!isSupabaseConfigured() || !supabase) {
+      // Se não estiver configurado, redirecionar para login
+      router.push('/login')
+      return
+    }
+
+    // Verificar se usuário está autenticado (com verificação adicional)
+    const checkAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session) {
+          router.push('/dashboard')
+        } else {
+          router.push('/login')
+        }
+      } catch (error) {
+        console.error('Erro ao verificar autenticação:', error)
         router.push('/login')
       }
-    })
+    }
+
+    checkAuth()
   }, [router])
 
   return (
